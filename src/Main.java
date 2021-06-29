@@ -1,12 +1,40 @@
 public class Main {
 
-    public static void main(String[] args) {
-        Zuschauer[] zuschauer = new Zuschauer[3];
-        zuschauer[0] = new Marktbesucher("Heinz");
-        zuschauer[1] = new Marktbesucher("Franz");
-        zuschauer[2] = new Marktbesucher("Xaver");
+    public static void main(String[] args)
+    {
+        Gaukler gaukler = new Gaukler();
+        Observer fritz = new Marktbesucher("Fritz");
+        Observer franz = new Marktbesucher("Franz");
+        Marktbesucher frieda = new Marktbesucher("Frieda");
+        Marktbesucher hans = new Marktbesucher("Hans");
+        Marktbesucher heinz = new Marktbesucher("Heinz");
+        Marktbesucher hanna = new Marktbesucher("Hanna");
 
-        new Gaukler(zuschauer);
+        // erwartet: kann sich registrieren
+        gaukler.addObserver(fritz);
+        gaukler.addObserver(franz);
+        gaukler.addObserver(frieda);
+        gaukler.addObserver(hans);
+        gaukler.addObserver(heinz);
+        // erwartet: kann sich nicht registrieren
+        gaukler.addObserver(hanna);
+
+        System.out.println("\nJetzt wird der Gaukler ein Kunststück vorführen");
+        // Aktionen durchführen
+        // erwartet: alle registrierten Zuschauer werden informiert
+        gaukler.notifyObserver();
+
+        // einen Besucher de-registrieren
+        // erwartet: Franz de-registriert sich selbst
+        gaukler.deleteObserver(franz);
+
+        System.out.println("\nJetzt wird der Gaukler noch ein Kunststück vorführen");
+        // Aktionen durchführen
+        // erwartet: alle außer Franz werden informiert
+        gaukler.notifyObserver();
+
     }
+
+
 
 }
